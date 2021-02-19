@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="booklist">
     <h1>My Book List</h1>
     <br>
     <!--displays list -->
@@ -7,17 +7,18 @@
     <tr>
       <th class="main-column">
         <a href="" class="sort-link" @click.prevent="handleSort(0)">Name</a> 
-        <v-icon name="caret-down" v-if="sortCol == 0 && sortDir == 1" label="Alphabetical"/>
-        <v-icon name="caret-up" v-if="sortCol == 0 && sortDir == -1" label="Alphabetical"/>
+        <v-icon name="caret-down" v-if="sortCol == 0 && sortDir == 1" />
+        <v-icon name="caret-up" v-if="sortCol == 0 && sortDir == -1" />
       </th>
       <th>
         <a href="" class="sort-link" @click.prevent="handleSort(1)">Date Pub.</a>
-        <v-icon name="caret-down" v-if="sortCol == 1 && sortDir == 1" label="Alphabetical"/>
-        <v-icon name="caret-up" v-if="sortCol == 1 && sortDir == -1" label="Alphabetical"/>
+        <v-icon name="caret-down" v-if="sortCol == 1 && sortDir == 1" />
+        <v-icon name="caret-up" v-if="sortCol == 1 && sortDir == -1" />
       </th>
       <th class="center">Actions</th>
     </tr>
-      <MyBookItem v-for="book in books" :key="book.id" :book="book" :currPosition="book.sort" :totalBooks="books.length" @delete="onDeleteBook(book.id)" />
+      <MyBookItem v-for="book in books" :key="book.id" :book="book" :currPosition="book.sort" :totalBooks="books.length" 
+                  @delete="onDeleteBook(book.id)" @shiftBook="performShift" />
     </table>
   </div>
 </template>
@@ -42,8 +43,6 @@ export default {
   },
   created (){
     EventBus.$on('add-book', (data) => {
-        console.log('Inside add-book');
-        console.log(data);
         if (!this.books.filter(function (b) { // prevent duplicates
               return (b.id == data.id);
         }).length) {
@@ -60,15 +59,30 @@ export default {
           this.performSort();
       },
       handleSort(sortCol) {
-          if (this.books.length) {
-            console.log('Inside handleSort '+sortCol);
+          if (this.books.length) {            
             if (this.sortCol == sortCol) this.sortDir = this.sortDir * -1;
             else this.sortCol = sortCol;            
             this.performSort();
           }          
       },
+      swap(x, y){
+          const xx = this.books[x];
+          const yy = this.books[y];
+          this.$set(this.books, x, yy);
+          this.$set(this.books, y, xx);
+      },      
+      performShift(currPos, isDown) {
+          let desiredPos = (isDown ? currPos+1 : currPos-1);
+          console.log(desiredPos);
+          // Reset sortCol
+          this.sortCol = -1;
+          // Apply swap
+          this.swap(currPos, desiredPos);          
+          // Set the new sort value
+          this.performSort();
+      },
       performSort() {
-          if (this.sortCol >= 0) {
+          if (this.sortCol >= 0) {            
             let sortDir = this.sortDir;          
             switch(this.sortCol) {
               case 0:
@@ -83,9 +97,9 @@ export default {
           }
           // Set the sort value, since deleting will create gaps
           for (var i=0; i < this.books.length; i++) {
-              console.log(this.books[i].volumeInfo.title+' WAS: '+this.books[i].sort);
+              // console.log(this.books[i].volumeInfo.title+' WAS: '+this.books[i].sort);
               this.books[i].sort = i;
-              console.log('NOW: '+this.books[i].sort);
+              // console.log('NOW: '+this.books[i].sort);
           }
       }
   }   
@@ -93,6 +107,10 @@ export default {
 </script>
 
 <style lang="scss">
+    .booklist {
+      margin-bottom: 40px;
+    }
+
     .table {
       min-width: 600px;
       margin: 0 auto;
