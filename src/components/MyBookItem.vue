@@ -8,13 +8,13 @@
       </td>
       <td>
           <span class="gapit">
-            <v-icon name="arrow-down" v-show="notAtBottom" @click="handleMove()" />
+            <v-icon name="arrow-down" v-show="notAtBottom" @click="handleMove(1)" />
           </span>  
           <span class="gapit">
-            <v-icon name="arrow-up" v-show="notAtTop" @click="handleMove()" />
+            <v-icon name="arrow-up" v-show="notAtTop" @click="handleMove(0)" />
           </span>  
           <span class="gapit">
-            <v-icon name="eye" label="View Details" @click="handleDebug()" />          
+            <v-icon name="eye" label="View Details" @click="handleDisplay()" />          
           </span>
           <span class="gapit">
             <v-icon name="trash" class="red" label="Remove Book" @click="handleRemove()" />          
@@ -60,16 +60,12 @@ export default {
         console.log(this.book.id);  
         this.$emit('delete');         
     },
-    handleMove() {
-        console.log('TODO: Handle move');        
-        console.log(this.totalBooks);
-        console.log('current pos='+this.book.sort);
+    handleMove(isDown) {
+        let currPos = this.book.sort
+        this.$emit('shiftBook', currPos, isDown);
     },
-    handleDebug() {
-      console.log('INSIDE handleDebug');
-      console.log(this.book.sort); 
-      console.log((this.book.sort != 0 && this.totalBooks > 1));     
-      console.log((this.book.sort < (this.totalBooks-1) && this.totalBooks > 1));     
+    handleDisplay() {
+      console.log('INSIDE handleDisplay');
     }
   },    
 }
