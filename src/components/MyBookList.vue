@@ -48,7 +48,7 @@ export default {
     if (this.$store.state.books.length) {
       this.books = this.$store.state.books;
     }       
-    
+
     EventBus.$on('add-book', (data) => {
         if (!this.books.filter(function (b) { // prevent duplicates
               return (b.id == data.id);
@@ -66,10 +66,11 @@ export default {
           this.books = this.books.filter(function (b) {
               return (b.id != bookID);
           });
+          if (this.books.length < 2) this.sortCol = -1; // Remove Sort arrow
           this.performSort();
       },
       handleSort(sortCol) {
-          if (this.books.length) {            
+          if (this.books.length > 1) {            
             if (this.sortCol == sortCol) this.sortDir = this.sortDir * -1;
             else this.sortCol = sortCol;            
             this.performSort();
@@ -123,7 +124,7 @@ export default {
     }
 
     .table {
-      min-width: 600px;
+      width: 640px;
       margin: 0 auto;
     }
 

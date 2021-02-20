@@ -64,7 +64,7 @@ methods: {
 <style  lang="scss" scoped>
   .content {
       border: 3px solid blue;
-      min-height: 310px; 
+      min-height: 350px; 
       max-width: 640px;
       margin: 0 auto;     
       position: relative;

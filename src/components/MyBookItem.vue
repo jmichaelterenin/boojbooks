@@ -1,6 +1,6 @@
 <template>
     <tr>       
-      <td class="left">        
+      <td class="left title">        
           {{ volumeInfo.title }}
       </td> 
       <td class="left">
@@ -8,16 +8,16 @@
       </td>
       <td>
           <span class="gapit">
-            <v-icon name="arrow-down" class="clickable" v-show="notAtBottom" @click="handleMove(1)" />
+            <v-icon name="arrow-down" class="clickable" title="Move Down" v-show="notAtBottom" @click="handleMove(1)" />
           </span>  
           <span class="gapit">
-            <v-icon name="arrow-up" class="clickable" v-show="notAtTop" @click="handleMove(0)" />
+            <v-icon name="arrow-up" class="clickable" title="Move Up" v-show="notAtTop" @click="handleMove(0)" />
           </span>  
           <span class="gapit">
-            <v-icon name="eye" class="clickable" label="View Details" @click="handleDisplay()" />          
+            <v-icon name="eye" class="clickable" title="View Details" @click="handleDisplay()" />          
           </span>
           <span class="gapit">
-            <v-icon name="trash" class="clickable red" label="Remove Book" @click="handleRemove()" />                      
+            <v-icon name="trash" class="clickable red" title="Remove Book" @click="handleRemove()" />                      
           </span>  
       </td>   
     </tr>     
@@ -85,7 +85,7 @@ export default {
         this.$emit('shiftBook', currPos, isDown);
     },
     handleDisplay() {
-      console.log('INSIDE handleDisplay');
+      // console.log('INSIDE handleDisplay');
       this.setCurr({ curr: this.book.sort });
       this.$router.push({ path: 'bookdetails' })
     }
@@ -102,6 +102,10 @@ td {
   padding: 2px 5px;
 }
 
+.title {
+  max-width: 400px;
+}
+
 .clickable {
   cursor: pointer;
 }
@@ -113,7 +117,7 @@ td {
 .gapit {
   display: inline-block;
   padding: 0 5px;
-  min-width: 16px;
+  min-width: 15px;
 }
 
 </style>
