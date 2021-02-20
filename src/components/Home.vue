@@ -2,14 +2,15 @@
   <div class="home">
     <h1>{{ msg }}</h1>
     <div class="content">
-      <div class="loading" v-if="loadState == 'loading'"></div>
+      <div class="initial" v-if="loadState == 'initial'">Type your desired book title in the text field below and click 'Search' to recieve the <br/>top 3 relevant results</div>
+      <div class="loading" v-if="loadState == 'loading'"></div>      
       <div class="noresults" v-if="loadState == 'noresults'">No results found</div>
       <BookList v-if="loadState == 'success'" :books="books"/>
     </div>        
     <div class="query">
       <form @submit.prevent="search">
         <div>
-          <input type="text" v-model="keyword" placeholder="Search..." class="input" required>
+          <input type="text" v-model="keyword" placeholder="Search..." class="input" maxlength="60" required>
           <input type="submit" value="Search" class="button">
         </div>
       </form>
@@ -38,7 +39,7 @@ export default {
       books: [],
       keyword: '',      
       maxResults: '3',
-      loadState: ''
+      loadState: 'initial'
     }
   },
 methods: {
@@ -62,7 +63,10 @@ methods: {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style  lang="scss" scoped>
   .content {
-      min-height: 310px;      
+      border: 3px solid blue;
+      min-height: 310px; 
+      max-width: 640px;
+      margin: 0 auto;     
       position: relative;
 
       .loading {
@@ -76,12 +80,29 @@ methods: {
       }
 
       .noresults {
+        padding: 20px;
         font-weight: bold;
+        position: relative;        
       }
+
+      .initial {
+        padding: 20px;
+        font-style: italic;
+        position: relative;        
+      }      
 
       .book {
         height: 100%;
       }
+  }
 
+  .query {
+        margin-top: 10px;
+
+        .input {
+            width: 210px;
+            height: 20px;
+            margin-right: 10px;
+        }
   }
 </style>

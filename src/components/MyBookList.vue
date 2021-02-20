@@ -20,6 +20,7 @@
       <MyBookItem v-for="book in books" :key="book.id" :book="book" :currPosition="book.sort" :totalBooks="books.length" 
                   @delete="onDeleteBook(book.id)" @shiftBook="performShift" />
     </table>
+    <vue-confirm-dialog></vue-confirm-dialog>
   </div>
 </template>
 
@@ -27,6 +28,7 @@
 import { EventBus } from '../event-bus.js';
 import MyBookItem from "./MyBookItem";
 import Icon from 'vue-awesome/components/Icon'
+import { mapMutations } from 'vuex'
 
 export default {
   name: 'BookList',
@@ -42,6 +44,11 @@ export default {
     }  
   },
   created (){
+    console.log('INSIDE created for BookList');
+    if (this.$store.state.books.length) {
+      this.books = this.$store.state.books;
+    }       
+    
     EventBus.$on('add-book', (data) => {
         if (!this.books.filter(function (b) { // prevent duplicates
               return (b.id == data.id);
@@ -49,10 +56,13 @@ export default {
           this.books.push(data);          
           this.performSort();        
         }
-    })
+    })    
   },
-  methods: {
-      onDeleteBook (bookID) {          
+  methods: {   
+      ...mapMutations(['setBooks']),
+    
+      onDeleteBook (bookID) { 
+
           this.books = this.books.filter(function (b) {
               return (b.id != bookID);
           });
@@ -101,6 +111,7 @@ export default {
               this.books[i].sort = i;
               // console.log('NOW: '+this.books[i].sort);
           }
+          this.setBooks({ books: this.books });
       }
   }   
 }

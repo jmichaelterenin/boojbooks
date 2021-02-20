@@ -8,23 +8,24 @@
       </td>
       <td>
           <span class="gapit">
-            <v-icon name="arrow-down" v-show="notAtBottom" @click="handleMove(1)" />
+            <v-icon name="arrow-down" class="clickable" v-show="notAtBottom" @click="handleMove(1)" />
           </span>  
           <span class="gapit">
-            <v-icon name="arrow-up" v-show="notAtTop" @click="handleMove(0)" />
+            <v-icon name="arrow-up" class="clickable" v-show="notAtTop" @click="handleMove(0)" />
           </span>  
           <span class="gapit">
-            <v-icon name="eye" label="View Details" @click="handleDisplay()" />          
+            <v-icon name="eye" class="clickable" label="View Details" @click="handleDisplay()" />          
           </span>
           <span class="gapit">
-            <v-icon name="trash" class="red" label="Remove Book" @click="handleRemove()" />          
+            <v-icon name="trash" class="clickable red" label="Remove Book" @click="handleRemove()" />                      
           </span>  
       </td>   
-    </tr> 
+    </tr>     
 </template>
 
 <script>
 import Icon from 'vue-awesome/components/Icon'
+import { mapMutations } from 'vuex'
 
 export default {
   name: 'MyBookItem',  
@@ -55,10 +56,29 @@ export default {
     }
   },
   methods: {
-    handleRemove() {
-        console.log('TODO: Handle remove');        
-        console.log(this.book.id);  
-        this.$emit('delete');         
+    ...mapMutations(['setCurr']),
+
+    handleRemove() {   
+        let self = this     
+        this.$confirm (
+        {
+          message: `Are you sure?`,
+          button: {
+            no: 'No',
+            yes: 'Yes'
+          },
+          /**
+          * Callback Function
+          * @param {Boolean} confirm
+          */
+          callback: confirm => {
+            if (confirm) {
+              self.$emit('delete');         
+            }
+          }
+        }
+      )
+        
     },
     handleMove(isDown) {
         let currPos = this.book.sort
@@ -66,6 +86,8 @@ export default {
     },
     handleDisplay() {
       console.log('INSIDE handleDisplay');
+      this.setCurr({ curr: this.book.sort });
+      this.$router.push({ path: 'bookdetails' })
     }
   },    
 }
@@ -78,6 +100,10 @@ export default {
 
 td {
   padding: 2px 5px;
+}
+
+.clickable {
+  cursor: pointer;
 }
 
 .red {

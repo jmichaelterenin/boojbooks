@@ -6,7 +6,7 @@
         {{ volumeInfo.title }}
     </div>    
     <div class="content">
-        <a :href="volumeInfo.previewLink" target="_blank">
+        <a :href="volumeInfo.previewLink" target="_blank" title="Click to preview on Google">
         <template v-if="volumeInfo.imageLinks">
             <img :src="volumeInfo.imageLinks.thumbnail" :alt="volumeInfo.title">
         </template>
