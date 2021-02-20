@@ -39,12 +39,18 @@ export default {
   data () {
     return {    
       books: [],
-      sortCol: -1,
-      sortDir: 1,
     }  
   },
+  computed: {  
+      sortCol(){
+        return this.$store.state.sortCol;
+      }, 
+      sortDir(){
+        return this.$store.state.sortDir;
+      }
+  },    
   created (){
-    console.log('INSIDE created for BookList');
+    // console.log('INSIDE created for BookList');
     if (this.$store.state.books.length) {
       this.books = this.$store.state.books;
     }       
@@ -66,13 +72,13 @@ export default {
           this.books = this.books.filter(function (b) {
               return (b.id != bookID);
           });
-          if (this.books.length < 2) this.sortCol = -1; // Remove Sort arrow
+          if (this.books.length < 2) this.$store.state.sortCol = -1; // Remove Sort arrow
           this.performSort();
       },
       handleSort(sortCol) {
-          if (this.books.length > 1) {            
-            if (this.sortCol == sortCol) this.sortDir = this.sortDir * -1;
-            else this.sortCol = sortCol;            
+          if (this.books.length > 1) {
+            if (this.$store.state.sortCol == sortCol) this.$store.state.sortDir = this.$store.state.sortDir * -1;
+            else this.$store.state.sortCol = sortCol;            
             this.performSort();
           }          
       },
@@ -84,18 +90,18 @@ export default {
       },      
       performShift(currPos, isDown) {
           let desiredPos = (isDown ? currPos+1 : currPos-1);
-          console.log(desiredPos);
+          // console.log(desiredPos);
           // Reset sortCol
-          this.sortCol = -1;
+          this.$store.state.sortCol = -1;
           // Apply swap
           this.swap(currPos, desiredPos);          
           // Set the new sort value
           this.performSort();
       },
       performSort() {
-          if (this.sortCol >= 0) {            
-            let sortDir = this.sortDir;          
-            switch(this.sortCol) {
+          if (this.$store.state.sortCol >= 0) {            
+            let sortDir = this.$store.state.sortDir;          
+            switch(this.$store.state.sortCol) {
               case 0:
                 this.books.sort((a, b) => (a.volumeInfo.title > b.volumeInfo.title) ? sortDir : (sortDir * -1));
                 break;
