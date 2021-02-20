@@ -1,5 +1,7 @@
 # boojbooks
 
+POSTMAN collection link: https://www.getpostman.com/collections/f0e87319d332cc0be2d6
+
 ## Project setup
 ```
 npm install
