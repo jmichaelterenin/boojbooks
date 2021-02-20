@@ -7,7 +7,9 @@ Vue.use(Vuex)
 
 const state = {
     books: [],
-    curr: 0
+    curr: 0,
+    sortCol: -1,
+    sortDir: 1
 }
 
 const actions = {
