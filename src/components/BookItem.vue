@@ -87,8 +87,7 @@ ul li {
   margin: 5px;  
   overflow: hidden;
   text-overflow: ellipsis;
-  display: -webkit-box;  
-  -webkit-line-clamp: 2;
+  display: -webkit-box;    
   -webkit-box-orient: vertical;
 }
 
@@ -100,8 +99,10 @@ ul li {
 }
 
 .header {
-  height: 64px;    
+  min-height: 36px;
+  max-height: 36px;    
   font-weight: bold;  
+  -webkit-line-clamp: 2;
 }
 
 .content {
@@ -109,7 +110,9 @@ ul li {
 }
 
 .footer {
-  height: 64px;      
+  min-height: 26px;
+  max-height: 26px;    
+  -webkit-line-clamp: 1;
 }
 
 .add-section {

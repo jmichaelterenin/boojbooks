@@ -52,13 +52,9 @@
 </template>
 
 <script>
-// import Icon from 'vue-awesome/components/Icon'
 
 export default {
   name: 'MyBookItem',  
-  components: {
-    // 'v-icon': Icon
-  },
   data() {
     return {
         loaded: false, 

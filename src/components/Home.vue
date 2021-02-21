@@ -39,7 +39,7 @@ export default {
       books: [],
       keyword: '',      
       maxResults: '3',
-      loadState: 'initial'
+      loadState: 'initial',      
     }
   },
 methods: {
