@@ -1,11 +1,11 @@
 <template>
   <ul class="book-list">     
-        <BookItem v-for="book in books" :key="book.id" :book="book"/>    
+        <book-layout-results v-for="book in books" :key="book.id" :book="book"/>    
   </ul>
 </template>
 
 <script>
-import BookItem from "./BookItem";
+import BookLayoutResults from './BookLayoutResults.vue';
 
 export default {
   name: 'BookList',
@@ -15,8 +15,8 @@ export default {
       required: true
     }
   },
-  components: {
-    BookItem
+  components: {    
+    BookLayoutResults
   }
 };
 </script>

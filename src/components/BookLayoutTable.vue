@@ -24,11 +24,13 @@
 </template>
 
 <script>
+import Book from './Book.vue';
 import Icon from 'vue-awesome/components/Icon'
 import { mapMutations } from 'vuex'
 
 export default {
-  name: 'MyBookItem',  
+  name: 'BookLayoutTable',  
+  extends: Book, 
   components: {
     'v-icon': Icon
   },
@@ -38,16 +40,9 @@ export default {
     },
     currPosition: {
       type: Number
-    },
-    book: {
-      type: Object,
-      required: true
-    },    
+    }
   },
   computed: {
-    volumeInfo(){
-      return this.book.volumeInfo
-    },
     notAtTop() {
       return (this.currPosition != 0 && this.totalBooks > 1);
     },

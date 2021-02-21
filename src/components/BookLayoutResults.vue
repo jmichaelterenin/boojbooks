@@ -42,21 +42,12 @@
 </template>
 
 <script>
+import Book from './Book.vue';
 import { EventBus } from '../event-bus.js';
 
 export default {
-  name: 'BookItem',  
-  props: {
-    book: {
-      type: Object,
-      required: true
-    }
-  },
-  computed: {
-    volumeInfo(){
-      return this.book.volumeInfo
-    }
-  },
+  name: 'BookLayoutResults',  
+  extends: Book,  
   methods: {
     handleClick() {        
         console.log(this.book.id);   

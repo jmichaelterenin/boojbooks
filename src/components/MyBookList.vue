@@ -17,7 +17,7 @@
       </th>
       <th class="center">Actions</th>
     </tr>
-      <MyBookItem v-for="book in books" :key="book.id" :book="book" :currPosition="book.sort" :totalBooks="books.length" 
+      <book-layout-table v-for="book in books" :key="book.id" :book="book" :currPosition="book.sort" :totalBooks="books.length" 
                   @delete="onDeleteBook(book.id)" @shiftBook="performShift" />
     </table>
     <vue-confirm-dialog></vue-confirm-dialog>
@@ -26,14 +26,14 @@
 
 <script>
 import { EventBus } from '../event-bus.js';
-import MyBookItem from "./MyBookItem";
+import BookLayoutTable from "./BookLayoutTable";
 import Icon from 'vue-awesome/components/Icon'
 import { mapMutations } from 'vuex'
 
 export default {
   name: 'BookList',
   components: {
-    MyBookItem,
+    BookLayoutTable,
     'v-icon': Icon
   }, 
   data () {

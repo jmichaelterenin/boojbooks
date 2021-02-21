@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h1>{{ msg }}</h1>
+    <h1>{{ title }}</h1>
     <div class="content">
       <div class="initial" v-if="loadState == 'initial'">Type your desired book title in the text field below and click 'Search' to recieve the <br/>top 3 relevant results</div>
       <div class="loading" v-if="loadState == 'loading'"></div>      
@@ -35,7 +35,7 @@ export default {
   },
   data () {
     return {
-      msg: 'Welcome to Your Booj Book App',
+      title: 'Welcome to Your Booj Book App',
       books: [],
       keyword: '',      
       maxResults: '3',
