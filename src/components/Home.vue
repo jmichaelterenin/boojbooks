@@ -3,7 +3,8 @@
     <h1>{{ title }}</h1>
     <div class="content">
       <div class="initial" v-if="loadState == 'initial'">Type your desired book title in the text field below and click 'Search' to recieve the <br/>top 3 relevant results</div>
-      <div class="loading" v-if="loadState == 'loading'"></div>      
+      <div class="loading" v-if="loadState == 'loading'"></div> 
+      <div class="error" v-if="loadState == 'error'">{{ error }}</div>     
       <div class="noresults" v-if="loadState == 'noresults'">No results found</div>
       <BookList v-if="loadState == 'success'" :books="books"/>
     </div>        
@@ -39,11 +40,12 @@ export default {
       books: [],
       keyword: '',      
       maxResults: '3',
-      loadState: 'initial',      
+      loadState: 'initial', 
+      error: ''     
     }
   },
 methods: {
-    search() {
+    async search() {
       this.loadState = 'loading';
       axios
         .get(
@@ -52,10 +54,13 @@ methods: {
           }&orderBy=relevance&maxResults=${this.maxResults}`
         )
         .then(response => {
-          console.log(response.data)
+          // console.log(response.data)
           this.books = response.data.items;          
           this.loadState = (response.data.totalItems ? 'success' : 'noresults');          
-        })
+        }).catch((error) => {
+          this.loadState = 'error';
+          this.error = error;          
+        });
     }
   },  
 }
@@ -90,6 +95,12 @@ methods: {
         font-style: italic;
         position: relative;        
       }      
+
+      .error {
+        padding: 20px;
+        color: red;
+        position: relative;
+      }
 
       .book {
         height: 100%;

@@ -4,21 +4,25 @@
     <br>
     <!--displays list -->
     <table class="table striped">   
-    <tr>
-      <th class="main-column">
-        <a href="" class="sort-link" @click.prevent="handleSort(0)">Name</a> 
-        <v-icon name="caret-down" v-if="sortCol == 0 && sortDir == 1" />
-        <v-icon name="caret-up" v-if="sortCol == 0 && sortDir == -1" />
-      </th>
-      <th>
-        <a href="" class="sort-link" @click.prevent="handleSort(1)">Date Pub.</a>
-        <v-icon name="caret-down" v-if="sortCol == 1 && sortDir == 1" />
-        <v-icon name="caret-up" v-if="sortCol == 1 && sortDir == -1" />
-      </th>
-      <th class="center">Actions</th>
-    </tr>
-      <book-layout-table v-for="book in books" :key="book.id" :book="book" :currPosition="book.sort" :totalBooks="books.length" 
+      <thead>
+        <tr>
+          <th class="main-column">
+            <a href="" class="sort-link" @click.prevent="handleSort(0)">Name</a> 
+            <v-icon name="caret-down" v-if="sortCol == 0 && sortDir == 1" />
+            <v-icon name="caret-up" v-if="sortCol == 0 && sortDir == -1" />
+          </th>
+          <th>
+            <a href="" class="sort-link" @click.prevent="handleSort(1)">Date Pub.</a>
+            <v-icon name="caret-down" v-if="sortCol == 1 && sortDir == 1" />
+            <v-icon name="caret-up" v-if="sortCol == 1 && sortDir == -1" />
+          </th>
+          <th class="center">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <book-layout-table v-for="book in books" :key="book.id" :book="book" :currPosition="book.sort" :totalBooks="books.length" 
                   @delete="onDeleteBook(book.id)" @shiftBook="performShift" />
+      </tbody>            
     </table>
     <vue-confirm-dialog></vue-confirm-dialog>
   </div>
